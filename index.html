@@ -189,7 +189,7 @@ var SCENARIOS={
 };
 
 var currentScenario=null;
-var history=[];
+var chatHistory=[];
 var count=0;
 var busy=false;
 
@@ -220,7 +220,7 @@ function startChat(s){
   document.getElementById('scenarioPill').textContent=sc.pill;
   document.getElementById('scenarioPill').className='scenario-pill '+(s==='A'?'pill-a':'pill-b');
   document.getElementById('scenarioBarText').innerHTML=sc.bar;
-  history.push({role:'assistant',content:sc.opening});
+  chatHistory.push({role:'assistant',content:sc.opening});
   setTimeout(function(){addMsg('provider',sc.opening);},500);
 }
 
@@ -255,7 +255,7 @@ async function sendMessage(){
   input.value='';
   count++;
   addMsg('advisor',text);
-  history.push({role:'user',content:text});
+  chatHistory.push({role:'user',content:text});
   busy=true;
   document.getElementById('sendBtn').disabled=true;
   input.disabled=true;
@@ -273,13 +273,13 @@ async function sendMessage(){
         model:'claude-haiku-4-5-20251001',
         max_tokens:150,
         system:SCENARIOS[currentScenario].system,
-        messages:history
+        messages:chatHistory
       })
     });
     var data=await r.json();
     var reply=(data.content&&data.content[0]&&data.content[0].text)?data.content[0].text.trim():"Sorry, could you repeat that?";
     removeTyping();
-    history.push({role:'assistant',content:reply});
+    chatHistory.push({role:'assistant',content:reply});
     addMsg('provider',reply);
     if(count>=5){setTimeout(showFeedback,1000);return;}
   }catch(e){
@@ -294,7 +294,7 @@ async function sendMessage(){
 
 function showFeedback(){
   document.getElementById('inputArea').style.display='none';
-  var at=history.filter(function(m){return m.role==='user';}).map(function(m){return m.content.toLowerCase();}).join(' ');
+  var at=chatHistory.filter(function(m){return m.role==='user';}).map(function(m){return m.content.toLowerCase();}).join(' ');
   var checks=[
     {label:'Acknowledge',pass:/understand|hear you|feel|makes sense|completely|i get|sorry|concern|appreciate|totally|that must|awkward|embarrass/.test(at),yes:'You acknowledged the concern before anything else',no:'Jump to Acknowledge first — always ask why before explaining'},
     {label:'Educate',pass:/tip|no fee|free|no.show|pay.in.advance|30.day|cash|benefit|earn|beta|optional|automat/.test(at),yes:'You mentioned at least one relevant benefit',no:'No benefits mentioned — offer 1-2 that connect to their concern'},
