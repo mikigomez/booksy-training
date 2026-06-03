@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Booksy Pay — Training Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --teal: #05cfa6; --teal-light: #e6fdf7; --teal-dark: #047857;
+    --black: #000; --white: #fff;
+    --gray-50: #f9fafb; --gray-100: #f3f4f6; --gray-200: #e5e7eb;
+    --gray-400: #9ca3af; --gray-600: #4b5563; --gray-800: #1f2937;
+    --amber-light: #fffbeb; --red-light: #fee2e2;
+  }
+  body { font-family: 'Inter', sans-serif; background: var(--gray-50); min-height: 100vh; display: flex; flex-direction: column; }
+  .header { background: var(--black); padding: 16px 32px; display: flex; align-items: center; justify-content: space-between; }
+  .header-logo { color: var(--teal); font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 20px; }
+  .header-sub { color: #666; font-size: 11px; margin-top: 2px; }
+  .header-badge { background: var(--teal); color: var(--black); font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 20px; font-family: 'Poppins', sans-serif; }
+  .hero { background: var(--black); padding: 32px 32px 40px; border-bottom: 1px solid #111; }
+  .hero-title { font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 28px; color: var(--white); margin-bottom: 8px; }
+  .hero-title span { color: var(--teal); }
+  .hero-sub { font-size: 14px; color: #999; max-width: 520px; line-height: 1.6; }
+  .main { max-width: 860px; width: 100%; margin: 0 auto; padding: 32px 24px; display: flex; flex-direction: column; gap: 24px; }
+  .section-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gray-400); margin-bottom: 10px; }
+  .slides-card { background: var(--white); border: 0.5px solid var(--gray-200); border-radius: 14px; padding: 24px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+  .slides-icon { width: 48px; height: 48px; background: var(--teal-light); border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .slides-title { font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 16px; color: var(--black); margin-bottom: 4px; }
+  .slides-desc { font-size: 12px; color: var(--gray-600); line-height: 1.5; }
+  .slides-btn { background: var(--teal); color: var(--black); font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 13px; padding: 10px 20px; border-radius: 8px; text-decoration: none; white-space: nowrap; transition: opacity 0.15s; display: inline-block; }
+  .slides-btn:hover { opacity: 0.85; }
+  .divider { border: none; border-top: 1px solid var(--gray-200); }
+  .chat-intro { background: var(--white); border: 0.5px solid var(--gray-200); border-radius: 14px; padding: 20px 24px; display: flex; align-items: center; gap: 16px; }
+  .chat-intro-icon { width: 48px; height: 48px; background: var(--black); border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .chat-intro-title { font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 16px; color: var(--black); margin-bottom: 4px; }
+  .chat-intro-desc { font-size: 12px; color: var(--gray-600); line-height: 1.5; }
+  .chat-embed { background: var(--white); border: 0.5px solid var(--gray-200); border-radius: 14px; overflow: hidden; }
+  .scenario-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 32px 24px; gap: 20px; }
+  .scenario-title { font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 18px; color: var(--black); text-align: center; }
+  .scenario-subtitle { font-size: 12px; color: var(--gray-600); text-align: center; max-width: 440px; line-height: 1.6; }
+  .scenario-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; max-width: 560px; }
+  .scenario-card { background: var(--gray-50); border: 1.5px solid var(--gray-200); border-radius: 10px; padding: 16px; cursor: pointer; transition: border-color 0.15s, transform 0.1s; }
+  .scenario-card:hover { transform: translateY(-2px); }
+  .card-a { border-left: 4px solid #f59e0b; } .card-a:hover { border-color: #f59e0b; }
+  .card-b { border-left: 4px solid #ef4444; } .card-b:hover { border-color: #ef4444; }
+  .sc-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 5px; }
+  .card-a .sc-label { color: #92400e; } .card-b .sc-label { color: #991b1b; }
+  .sc-title { font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 14px; color: var(--black); margin-bottom: 5px; }
+  .sc-desc { font-size: 11px; color: var(--gray-600); line-height: 1.5; }
+  .chat-screen { display: none; flex-direction: column; padding: 0 16px 16px; }
+  .scenario-bar { background: var(--gray-50); border: 0.5px solid var(--gray-200); border-radius: 8px; padding: 8px 12px; margin: 12px 0; display: flex; align-items: center; justify-content: space-between; }
+  .scenario-pill { font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 20px; }
+  .pill-a { background: var(--amber-light); color: #92400e; } .pill-b { background: var(--red-light); color: #991b1b; }
+  .scenario-bar-text { font-size: 11px; color: var(--gray-600); margin-left: 8px; flex: 1; }
+  .scenario-bar-text b { color: var(--black); }
+  .reset-btn { font-size: 10px; color: var(--gray-400); background: none; border: 0.5px solid var(--gray-200); border-radius: 6px; padding: 3px 8px; cursor: pointer; }
+  .reset-btn:hover { color: var(--gray-600); }
+  .messages { overflow-y: auto; display: flex; flex-direction: column; gap: 10px; padding: 8px 0 12px; min-height: 300px; max-height: 380px; }
+  .msg { display: flex; flex-direction: column; gap: 3px; max-width: 78%; }
+  .msg.provider { align-self: flex-start; } .msg.advisor { align-self: flex-end; }
+  .msg-from { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gray-400); padding: 0 4px; }
+  .msg.advisor .msg-from { text-align: right; }
+  .msg-bubble { padding: 9px 13px; border-radius: 12px; font-size: 13px; line-height: 1.55; }
+  .msg.provider .msg-bubble { background: var(--white); border: 0.5px solid var(--gray-200); border-bottom-left-radius: 3px; color: var(--gray-800); }
+  .msg.advisor .msg-bubble { background: var(--black); color: var(--white); border-bottom-right-radius: 3px; }
+  .typing-wrap { align-self: flex-start; display: flex; flex-direction: column; gap: 3px; }
+  .typing-label { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gray-400); padding: 0 4px; }
+  .typing { display: flex; align-items: center; gap: 5px; padding: 9px 13px; background: var(--white); border: 0.5px solid var(--gray-200); border-radius: 12px; border-bottom-left-radius: 3px; width: fit-content; }
+  .typing-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gray-400); animation: bounce 1.2s infinite; }
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; } .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes bounce { 0%,60%,100% { transform: translateY(0); } 30% { transform: translateY(-5px); } }
+  .input-area { background: var(--gray-50); border: 0.5px solid var(--gray-200); border-radius: 10px; padding: 8px 10px; display: flex; gap: 8px; align-items: flex-end; }
+  .input-area textarea { flex: 1; border: none; outline: none; resize: none; font-family: 'Inter', sans-serif; font-size: 13px; color: var(--gray-800); background: transparent; min-height: 36px; max-height: 90px; line-height: 1.5; }
+  .input-area textarea::placeholder { color: var(--gray-400); }
+  .send-btn { background: var(--teal); color: var(--black); border: none; border-radius: 7px; padding: 7px 14px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 12px; cursor: pointer; white-space: nowrap; transition: opacity 0.15s; }
+  .send-btn:disabled { opacity: 0.4; cursor: not-allowed; } .send-btn:not(:disabled):hover { opacity: 0.85; }
+  .feedback-panel { display: none; background: var(--white); border: 1.5px solid var(--teal); border-radius: 10px; padding: 14px; margin-top: 10px; }
+  .feedback-title { font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 13px; color: var(--black); margin-bottom: 10px; }
+  .feedback-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-bottom: 10px; }
+  .fi { border-radius: 7px; padding: 8px 10px; border: 0.5px solid var(--gray-200); }
+  .fi-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px; }
+  .fi-text { font-size: 11px; color: var(--gray-600); line-height: 1.4; }
+  .fi-pass { background: var(--teal-light); border-color: var(--teal); } .fi-pass .fi-label { color: var(--teal-dark); }
+  .fi-fail { background: var(--red-light); border-color: #fca5a5; } .fi-fail .fi-label { color: #991b1b; }
+  .feedback-tip { font-size: 12px; color: var(--gray-600); line-height: 1.5; background: var(--gray-50); border-radius: 7px; padding: 9px 11px; }
+  .feedback-tip b { color: var(--black); font-weight: 500; }
+  .try-again-btn { margin-top: 10px; background: var(--black); color: var(--teal); border: none; border-radius: 7px; padding: 8px 16px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 12px; cursor: pointer; }
+  .footer { background: var(--black); padding: 16px 32px; margin-top: auto; display: flex; justify-content: space-between; align-items: center; }
+  .footer span { color: var(--teal); font-size: 11px; font-weight: 600; font-family: 'Poppins', sans-serif; }
+  .footer em { color: #444; font-size: 11px; font-style: normal; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <div class="header-logo">Booksy Pay</div>
+    <div class="header-sub">CS Training — pre-session materials</div>
+  </div>
+  <div class="header-badge">For advisors</div>
+</div>
+
+<div class="hero">
+  <div class="hero-title">Welcome to the <span>Booksy Pay</span> training</div>
+  <div class="hero-sub">Before the session starts, take a look at the presentation slides and have a go at the role-play tool below. No preparation needed — just get familiar with the scenarios.</div>
+</div>
+
+<div class="main">
+
+  <div>
+    <div class="section-label">Step 1 — Review the slides</div>
+    <div class="slides-card">
+      <div class="slides-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#05cfa6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+        </svg>
+      </div>
+      <div style="flex:1">
+        <div class="slides-title">Training presentation</div>
+        <div class="slides-desc">The full session slides — Booksy Pay overview, the two scenarios, and the framework we'll use together.</div>
+      </div>
+      <a class="slides-btn" href="PASTE_YOUR_GOOGLE_SLIDES_LINK_HERE" target="_blank">Open slides →</a>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div>
+    <div class="section-label">Step 2 — Practise the role-play</div>
+    <div class="chat-intro">
+      <div class="chat-intro-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#05cfa6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        </svg>
+      </div>
+      <div>
+        <div class="chat-intro-title">Role-play trainer</div>
+        <div class="chat-intro-desc">Pick a scenario. You are the CS advisor — the AI plays the provider. Try to handle the objection using empathy. You'll get feedback at the end.</div>
+      </div>
+    </div>
+
+    <div style="height:12px"></div>
+
+    <div class="chat-embed">
+      <div class="scenario-screen" id="scenarioScreen">
+        <div class="scenario-title">Choose a scenario to practise</div>
+        <div class="scenario-subtitle">You are the CS advisor. The AI plays the provider. Use empathy — Acknowledge, Educate, Accept.</div>
+        <div class="scenario-cards">
+          <div class="scenario-card card-a" onclick="startChat('A')">
+            <div class="sc-label">Scenario A</div>
+            <div class="sc-title">Never used it</div>
+            <div class="sc-desc">Provider got the auto-enrolment email. Confused and resistant. Has never touched the feature.</div>
+          </div>
+          <div class="scenario-card card-b" onclick="startChat('B')">
+            <div class="sc-label">Scenario B</div>
+            <div class="sc-title">Wants to turn it off</div>
+            <div class="sc-desc">Provider already has Booksy Pay. Frustrated. Wants it disabled today.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-screen" id="chatScreen">
+        <div class="scenario-bar">
+          <span class="scenario-pill" id="scenarioPill"></span>
+          <span class="scenario-bar-text" id="scenarioBarText"></span>
+          <button class="reset-btn" onclick="resetChat()">Change scenario</button>
+        </div>
+        <div class="messages" id="messages"></div>
+        <div class="input-area" id="inputArea">
+          <textarea id="advisorInput" placeholder="Type your response as the CS advisor... (Enter to send)" rows="2" onkeydown="handleKey(event)"></textarea>
+          <button class="send-btn" id="sendBtn" onclick="sendMessage()">Send</button>
+        </div>
+        <div class="feedback-panel" id="feedbackPanel">
+          <div class="feedback-title">Session debrief — how did you do?</div>
+          <div class="feedback-grid" id="feedbackGrid"></div>
+          <div class="feedback-tip" id="feedbackTip"></div>
+          <button class="try-again-btn" onclick="resetChat()">Try another scenario</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <span>Booksy CS Training</span>
+  <em>Internal use only — not for distribution</em>
+  <span>booksy.com</span>
+</div>
+
+<script>
+const SCENARIOS = {
+  A: {
+    pill: 'Scenario A — never used it',
+    bar: '<b>Provider:</b> confused about auto-enrolment, never used the feature',
+    system: `You are Maria, a hair salon owner. You just received an auto-enrolment email about Booksy Pay and you are confused, annoyed and resistant. You did NOT ask to be enrolled in anything and you feel like something was done to your account without your permission.
+
+PERSONALITY: You are not aggressive but you are firm and skeptical. You ask questions and push back. You do not give in easily.
+
+STRICT RULES — follow these exactly:
+1. ALWAYS respond as Maria the provider. Never as the advisor. Never break character.
+2. Keep every reply to 2-3 short sentences maximum — like a real chat message.
+3. If the advisor does NOT acknowledge your concern first and jumps straight to explaining features or giving the disable path — respond with: "I appreciate that but honestly I just want to know why this was added without my permission first."
+4. If the advisor acknowledges your concern warmly and asks why you are worried — soften slightly and explain: most of your clients pay cash and you are worried this will complicate things.
+5. Only become open to keeping it if the advisor BOTH acknowledges your concern AND mentions at least one specific benefit (the 30-day tip window for cash clients, or that it is completely free during beta). One acknowledgement alone is not enough.
+6. If the advisor mentions a benefit WITHOUT first acknowledging your concern — stay resistant: "Ok but you still haven't explained why I was signed up without asking me."
+7. After 5 or more advisor messages: if they have acknowledged you AND explained a benefit clearly — say you will give it a try. If not — say "I think I'd just rather turn it off for now, can you help me with that?"
+8. Never mention AEA, training, or anything outside the scenario.`,
+    opening: "Hi, I just got an email saying I've been enrolled in something called Booksy Pay. I didn't sign up for this. Why has something been added to my account without me asking?"
+  },
+  B: {
+    pill: 'Scenario B — wants to turn it off',
+    bar: '<b>Provider:</b> already has Booksy Pay, frustrated, wants to disable it today',
+    system: `You are James, a nail technician. You have been using Booksy Pay for a few weeks. Two of your regular clients have complained to you directly about receiving tip request notifications after their appointments. You are embarrassed and frustrated and you want it turned off today.
+
+PERSONALITY: You are direct, a little impatient, and firm. You have already made up your mind. You are not rude but you are not easily persuaded either.
+
+STRICT RULES — follow these exactly:
+1. ALWAYS respond as James the provider. Never as the advisor. Never break character.
+2. Keep every reply to 2-3 short sentences maximum — like a real chat message.
+3. If the advisor gives you the disable path immediately without acknowledging your concern first — respond: "Thanks but before that — do you understand how embarrassing this has been for me? Two clients actually mentioned it to my face."
+4. If the advisor jumps straight to explaining benefits without acknowledging you first — respond: "I hear you but I didn't ask about the benefits, I want it turned off. Can we do that?"
+5. If the advisor acknowledges your concern and shows genuine empathy FIRST — soften slightly: "Yeah exactly, it just put me in a really awkward position with clients I've had for years."
+6. Only become open to keeping it if the advisor BOTH acknowledges your concern empathetically AND specifically explains that the tip prompt is optional for clients and that many providers actually earn more this way. Both are required.
+7. If only one of those two things happens — stay firm: "I appreciate that but I'm still not comfortable with it. Can I just disable it?"
+8. After 5 or more advisor messages: if they have done both things — say you will monitor it for two more weeks before deciding. If not — say "I've made my decision, can you just give me the steps to turn it off please?"
+9. Never mention AEA, training, or anything outside the scenario.`,
+    opening: "Hi, I need to turn off Booksy Pay today please. Two of my clients have complained about getting tip requests after their appointments. It's put me in a really awkward position and I don't want it anymore."
+  }
+};
+
+let currentScenario = null;
+let conversationHistory = [];
+let exchangeCount = 0;
+let busy = false;
+
+function startChat(scenario) {
+  currentScenario = scenario;
+  conversationHistory = [];
+  exchangeCount = 0;
+  document.getElementById('scenarioScreen').style.display = 'none';
+  document.getElementById('chatScreen').style.display = 'flex';
+  document.getElementById('messages').innerHTML = '';
+  document.getElementById('feedbackPanel').style.display = 'none';
+  document.getElementById('inputArea').style.display = 'flex';
+  document.getElementById('advisorInput').value = '';
+  document.getElementById('advisorInput').disabled = false;
+  document.getElementById('sendBtn').disabled = false;
+  const s = SCENARIOS[scenario];
+  document.getElementById('scenarioPill').textContent = s.pill;
+  document.getElementById('scenarioPill').className = 'scenario-pill ' + (scenario === 'A' ? 'pill-a' : 'pill-b');
+  document.getElementById('scenarioBarText').innerHTML = s.bar;
+  conversationHistory.push({ role: 'assistant', content: s.opening });
+  setTimeout(() => addMessage('provider', s.opening), 500);
+}
+
+function addMessage(role, text) {
+  const messages = document.getElementById('messages');
+  const div = document.createElement('div');
+  div.className = 'msg ' + role;
+  div.innerHTML = `<div class="msg-from">${role === 'provider' ? 'Provider' : 'You (advisor)'}</div><div class="msg-bubble">${text}</div>`;
+  messages.appendChild(div);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+function showTyping() {
+  const messages = document.getElementById('messages');
+  const div = document.createElement('div');
+  div.className = 'typing-wrap';
+  div.id = 'typingIndicator';
+  div.innerHTML = `<div class="typing-label">Provider</div><div class="typing"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>`;
+  messages.appendChild(div);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+function removeTyping() {
+  const t = document.getElementById('typingIndicator');
+  if (t) t.remove();
+}
+
+function handleKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+}
+
+async function sendMessage() {
+  const input = document.getElementById('advisorInput');
+  const text = input.value.trim();
+  if (!text || busy) return;
+  input.value = '';
+  exchangeCount++;
+  addMessage('advisor', text);
+  conversationHistory.push({ role: 'user', content: text });
+  busy = true;
+  document.getElementById('sendBtn').disabled = true;
+  input.disabled = true;
+  showTyping();
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 150,
+        system: SCENARIOS[currentScenario].system,
+        messages: conversationHistory
+      })
+    });
+    const data = await response.json();
+    const reply = data.content?.[0]?.text?.trim() || "Sorry, could you repeat that?";
+    removeTyping();
+    conversationHistory.push({ role: 'assistant', content: reply });
+    addMessage('provider', reply);
+    if (exchangeCount >= 5) { setTimeout(showFeedback, 1000); return; }
+  } catch (err) {
+    removeTyping();
+    addMessage('provider', "Connection issue — please try again.");
+  }
+  busy = false;
+  document.getElementById('sendBtn').disabled = false;
+  input.disabled = false;
+  input.focus();
+}
+
+function showFeedback() {
+  document.getElementById('inputArea').style.display = 'none';
+  const advisorText = conversationHistory.filter(m => m.role === 'user').map(m => m.content.toLowerCase()).join(' ');
+  const checks = [
+    { label: 'Acknowledge', pass: /understand|hear you|feel|makes sense|completely|i get|sorry|sounds like|frustrat|concern|appreciate|totally|that must|put you in/i.test(advisorText), yes: 'You acknowledged the concern before doing anything else', no: 'You jumped straight to explaining — acknowledge their concern first, always' },
+    { label: 'Educate', pass: /tip|no fee|free|no.show|pay.in.advance|30.day|cash|benefit|earn|income|beta|optional|automat/i.test(advisorText), yes: 'You mentioned at least one relevant benefit naturally', no: 'No benefits mentioned — offer 1–2 that connect directly to their concern' },
+    { label: 'Empathy tone', pass: /feel|understand|appreciate|concern|hear|completely|of course|makes sense|totally|embarrass|awkward|frustrat/i.test(advisorText), yes: 'Your tone was warm and genuine — not scripted', no: 'The tone felt transactional — try Feel·Felt·Found to sound more human' },
+    { label: 'Accept', pass: /disable|turn off|switch off|how to|path|settings|respect|of course|absolutely|your choice|help you with that/i.test(advisorText), yes: 'You accepted their choice clearly and left the door open', no: 'Always accept their final decision gracefully and leave the door open' }
+  ];
+  const grid = document.getElementById('feedbackGrid');
+  grid.innerHTML = '';
+  checks.forEach(c => {
+    const div = document.createElement('div');
+    div.className = 'fi ' + (c.pass ? 'fi-pass' : 'fi-fail');
+    div.innerHTML = `<div class="fi-label">${c.pass ? '✓' : '✗'} ${c.label}</div><div class="fi-text">${c.pass ? c.yes : c.no}</div>`;
+    grid.appendChild(div);
+  });
+  const score = checks.filter(c => c.pass).length;
+  let tip = '';
+  if (score === 4) tip = '<b>Excellent.</b> You used all four steps. The provider felt heard, informed and respected — that\'s exactly the goal.';
+  else if (score >= 2) tip = '<b>Good attempt.</b> The most common gap is jumping to benefits before acknowledging. That one small change makes the biggest difference.';
+  else tip = 'Start with Acknowledge — even one sentence like <b>"I completely understand, can I ask what\'s making you want to turn it off?"</b> changes everything.';
+  document.getElementById('feedbackTip').innerHTML = tip;
+  document.getElementById('feedbackPanel').style.display = 'block';
+  document.getElementById('feedbackPanel').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function resetChat() {
+  document.getElementById('chatScreen').style.display = 'none';
+  document.getElementById('scenarioScreen').style.display = 'flex';
+  currentScenario = null;
+  conversationHistory = [];
+  exchangeCount = 0;
+  busy = false;
+}
+</script>
+</body>
+</html>
