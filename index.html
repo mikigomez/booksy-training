@@ -121,7 +121,7 @@
         <div class="slides-title">Training presentation</div>
         <div class="slides-desc">The full session slides — Booksy Pay overview, the two scenarios, and the framework we'll use together.</div>
       </div>
-      <a class="slides-btn" href="PASTE_YOUR_GOOGLE_SLIDES_LINK_HERE" target="_blank">Open slides →</a>
+      <a class="slides-btn" href="https://docs.google.com/presentation/d/1QtsR03jlqJYF9_qebqq2niSAXqwHzRbi3ph96Tdc4zI/edit?slide=id.g3e7402f6961_2_165#slide=id.g3e7402f6961_2_165" target="_blank">Open slides →</a>
     </div>
   </div>
 
@@ -299,7 +299,7 @@ async function sendMessage() {
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'x-api-key': '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', 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
         max_tokens: 150,
